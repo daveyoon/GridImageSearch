@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/etQuery"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/etQuery"
+        android:layout_alignParentTop="true"
         android:onClick="onImageSearch"
         android:text="@string/btn_Search" />
 
@@ -38,6 +38,6 @@
         android:layout_alignLeft="@+id/etQuery"
         android:layout_below="@+id/etQuery"
         android:numColumns="3" >
-    </GridView>
+    </GridView>    		  
 
 </RelativeLayout>

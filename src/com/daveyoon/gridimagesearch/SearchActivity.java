@@ -83,4 +83,8 @@ public class SearchActivity extends Activity {
 			}
 		});
 	}
+	
+	public void onSettingsView(View v) {
+		
+	}
 }
