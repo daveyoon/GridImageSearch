@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 
 import com.loopj.android.image.SmartImageView;
 
+
+
 //responsible for translating the data into the view
 public class ImageResultsArrayAdapter extends ArrayAdapter<ImageResult> {
 	public ImageResultsArrayAdapter(Context context, List<ImageResult> images) {

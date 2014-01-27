@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -28,6 +29,11 @@ public class SearchActivity extends Activity {
 	Button btnSearch; 
 	ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 	ImageResultsArrayAdapter imageAdapter;
+	
+	//Settings 
+	String imageSize; 
+	String imageType; 
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,12 @@ public class SearchActivity extends Activity {
 		});
 	
 	}
-
+	
+	public void onSettingsView(MenuItem mi) {
+		Intent i = new Intent(getApplicationContext(), EditSearchSettingsActivity.class);		
+		startActivity(i);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -84,7 +95,5 @@ public class SearchActivity extends Activity {
 		});
 	}
 	
-	public void onSettingsView(View v) {
-		
-	}
+	
 }

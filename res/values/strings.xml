@@ -2,11 +2,14 @@
 <resources>
 
     <string name="app_name">GridImageSearch</string>
+    
+	<string name="title_activity_image_display">Full Image</string>
+	<string name="title_edit_search_settings">Edit Search Settings</string>
+    
     <string name="action_settings">Settings</string>
     <string name="btn_Search">Search</string>
     <string name="etQueryHint">Enter Search Query</string>
-    <string name="title_activity_image_display">ImageDisplayActivity</string>
-    <string name="hello_world">Hello world!</string>
+        
     <string name="tvImageSize">Image Size</string>
     <string name="tvColorFilter">Color Filter</string>
     <string name="tvSiteFilter">Site Filter</string>

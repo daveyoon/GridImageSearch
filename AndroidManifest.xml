@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="10" />
+        android:minSdkVersion="10"
+        android:targetSdkVersion="17" />
 	
 	<uses-permission
 	    android:name="android.permission.INTERNET" />    
@@ -29,6 +29,11 @@
             android:name="com.daveyoon.gridimagesearch.ImageDisplayActivity"
             android:label="@string/title_activity_image_display" >
         </activity>
+        <activity
+            android:name="com.daveyoon.gridimagesearch.EditSearchSettingsActivity"
+            android:label="@string/title_edit_search_settings" >
+        </activity>
+        
     </application>
 
 </manifest>

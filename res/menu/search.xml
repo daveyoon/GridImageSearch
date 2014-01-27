@@ -1,15 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
     
 	<item android:id="@+id/settings_button"
-	      android:icon="@android:drawable/ic_menu_preferences"
+	      android:icon="@android:drawable/ic_action_settings"
 		  android:showAsAction="ifRoom|withText"
 		  android:onClick="onSettingsView"
-	      android:title="Settings"/>
+		  android:title="Settings"
+	/>
 	      
 </menu>
