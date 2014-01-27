@@ -9,8 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.loopj.android.image.SmartImageView;
-
-
+import com.daveyoon.gridimagesearch.ImageResult;
 
 //responsible for translating the data into the view
 public class ImageResultsArrayAdapter extends ArrayAdapter<ImageResult> {

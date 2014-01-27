@@ -33,12 +33,13 @@ public class SearchActivity extends Activity {
 	//Settings 
 	String imageSize; 
 	String imageType; 
-	
+	String siteFilter;
+	String colorFilter;						
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_search);
+		//setContentView(R.layout.activity_search);
 		setupViews(); 
 		imageAdapter = new ImageResultsArrayAdapter(this, imageResults); 
 		gvResults.setAdapter(imageAdapter); 

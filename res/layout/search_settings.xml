@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"        
         android:layout_alignTop="@+id/tvImageSize"
         android:layout_toRightOf="@+id/tvImageSize"                
-        android:prompt="@array/image_sizes" />    
+        />    
     
     <TextView
         android:id="@+id/tvColorFilter"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvColorFilter"
         android:layout_toRightOf="@+id/tvColorFilter"
-        android:entries="@array/image_colors" />
+        />
 	
 	<TextView
         android:id="@+id/tvImageType"
@@ -82,6 +82,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/tvImageType"
-        android:entries="@array/image_types" />
+     />
 
 </RelativeLayout>

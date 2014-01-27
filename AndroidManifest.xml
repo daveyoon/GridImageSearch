@@ -31,7 +31,7 @@
         </activity>
         <activity
             android:name="com.daveyoon.gridimagesearch.EditSearchSettingsActivity"
-            android:label="@string/title_edit_search_settings" >
+            android:label="Hello World" >
         </activity>
         
     </application>
