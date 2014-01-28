@@ -3,11 +3,15 @@ package com.daveyoon.gridimagesearch;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class EditSearchSettingsActivity extends Activity {
 	
@@ -15,6 +19,12 @@ public class EditSearchSettingsActivity extends Activity {
 	private String colorFilter;
 	private String imageType;
 	private String siteFilter; 
+	
+	Spinner spColorFilter;
+	Spinner spImageSize;
+	Spinner spImageType;
+	EditText etSiteFilter;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,22 +36,23 @@ public class EditSearchSettingsActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.search, menu);
+		getMenuInflater().inflate(R.menu.image_display, menu);
 		return true;
 	}
-
 	public void setupView() {			
 		//initialize the setting values from the intent
 		imageSize = getIntent().getStringExtra("imageSize");				
 		colorFilter = getIntent().getStringExtra("imageSize");
 		imageType = getIntent().getStringExtra("imageSize");
 		siteFilter = getIntent().getStringExtra("imageSize");		
-		 
+		Toast.makeText(getApplicationContext(), "color"+colorFilter, Toast.LENGTH_LONG).show();
+		Log.d("Debug", "color" + colorFilter);
+		
 		//attach the spinners and form and set the values		
-		Spinner spColorFilter = (Spinner)findViewById(R.id.spColorFilter);
-		Spinner spImageSize = (Spinner)findViewById(R.id.spImageSize);
-		Spinner spImageType= (Spinner)findViewById(R.id.spImageType);
-		EditText etSiteFilter = (EditText)findViewById(R.id.etSiteFilter);
+		spColorFilter = (Spinner)findViewById(R.id.spColorFilter);
+		spImageSize = (Spinner)findViewById(R.id.spImageSize);
+		spImageType= (Spinner)findViewById(R.id.spImageType);
+		etSiteFilter = (EditText)findViewById(R.id.etSiteFilter);
 		
 		etSiteFilter.setText(siteFilter);
 		
@@ -50,6 +61,7 @@ public class EditSearchSettingsActivity extends Activity {
 		imageColorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spColorFilter.setAdapter(imageColorsAdapter);		
 		spColorFilter.setSelection(imageColorsAdapter.getPosition(colorFilter));
+		
 		
 		ArrayAdapter<CharSequence> imageSizesAdapter = ArrayAdapter.createFromResource(this,
 		        R.array.image_sizes, android.R.layout.simple_spinner_item);
@@ -64,4 +76,16 @@ public class EditSearchSettingsActivity extends Activity {
 		spImageType.setSelection(imageTypesAdapter.getPosition(imageType));
 		
 	}
+	public void saveSettings(View v) {
+		Intent data = new Intent();		
+		data.putExtra("imageSize", spImageSize.getSelectedItem().toString());
+		data.putExtra("colorFilter", spColorFilter.getSelectedItem().toString());
+		data.putExtra("imageType", spImageType.getSelectedItem().toString());
+		data.putExtra("siteFilter", etSiteFilter.getText().toString());		
+				
+		setResult(RESULT_OK, data);		
+		finish();		
+			
+	}
+	
 }

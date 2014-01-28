@@ -16,6 +16,7 @@
     <string name="tvImageType">Image Type</string>
     <string name="tvSettingsLabel">Advanced Search Options</string>
     <string-array name="image_sizes">
+        <item></item>
         <item>icon</item>
 		<item>small</item>
         <item>medium</item>
@@ -25,6 +26,7 @@
 		<item>huge</item>        
     </string-array>
 	<string-array name="image_colors">	    
+		<item></item>	    
         <item>black</item>
 		<item>blue</item>
         <item>brown</item>
@@ -39,9 +41,11 @@
 		<item>yellow</item>        
     </string-array>    
 	<string-array name="image_types">	    
+	    <item></item>
         <item>face</item>
 		<item>photo</item>
         <item>clipart</item>
 		<item>lineart</item>		        
-    </string-array>            
+    </string-array>
+		<string name="btn_save">Save</string>            
 </resources>

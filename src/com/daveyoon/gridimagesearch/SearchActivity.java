@@ -31,15 +31,19 @@ public class SearchActivity extends Activity {
 	ImageResultsArrayAdapter imageAdapter;
 	
 	//Settings 
-	String imageSize; 
-	String imageType; 
-	String siteFilter;
-	String colorFilter;						
+	private String imageSize; 
+	private String imageType; 
+	private String siteFilter;
+	private String colorFilter;						
+	
+	//Constants for Intent Views
+	private final int SAVE_SETTINGS_CODE = 1; 	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_search);
+		setContentView(R.layout.activity_search);
 		setupViews(); 
 		imageAdapter = new ImageResultsArrayAdapter(this, imageResults); 
 		gvResults.setAdapter(imageAdapter); 
@@ -56,8 +60,12 @@ public class SearchActivity extends Activity {
 	}
 	
 	public void onSettingsView(MenuItem mi) {
-		Intent i = new Intent(getApplicationContext(), EditSearchSettingsActivity.class);		
-		startActivity(i);
+		Intent i = new Intent(getApplicationContext(), EditSearchSettingsActivity.class);
+		i.putExtra("imageSize", imageSize);
+		i.putExtra("imageType", imageType);
+		i.putExtra("siteFilter", siteFilter);
+		i.putExtra("colorFilter", colorFilter);
+		startActivityForResult(i,SAVE_SETTINGS_CODE);				
 	}
 	
 	@Override
@@ -96,5 +104,16 @@ public class SearchActivity extends Activity {
 		});
 	}
 	
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      if (resultCode == RESULT_OK && requestCode == SAVE_SETTINGS_CODE) {
+         imageSize = data.getExtras().getString("imageSize");
+         imageType = data.getExtras().getString("imageType");
+         siteFilter = data.getExtras().getString("siteFilter");
+         colorFilter = data.getExtras().getString("colorFilter");    
+         Toast.makeText(getApplicationContext(), "color" + colorFilter, Toast.LENGTH_LONG).show(); 
+         Log.d("DEBUG", "color" + colorFilter);         
+      }
+    } 
 	
 }
