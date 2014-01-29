@@ -5,13 +5,12 @@ package com.daveyoon.gridimagesearch;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
+
 
 public class EditSearchSettingsActivity extends Activity {
 	
@@ -39,15 +38,14 @@ public class EditSearchSettingsActivity extends Activity {
 		getMenuInflater().inflate(R.menu.image_display, menu);
 		return true;
 	}
+	
 	public void setupView() {			
 		//initialize the setting values from the intent
 		imageSize = getIntent().getStringExtra("imageSize");				
-		colorFilter = getIntent().getStringExtra("imageSize");
-		imageType = getIntent().getStringExtra("imageSize");
-		siteFilter = getIntent().getStringExtra("imageSize");		
-		Toast.makeText(getApplicationContext(), "color"+colorFilter, Toast.LENGTH_LONG).show();
-		Log.d("Debug", "color" + colorFilter);
-		
+		colorFilter = getIntent().getStringExtra("colorFilter");
+		imageType = getIntent().getStringExtra("imageType");
+		siteFilter = getIntent().getStringExtra("imageFilter");		
+        		
 		//attach the spinners and form and set the values		
 		spColorFilter = (Spinner)findViewById(R.id.spColorFilter);
 		spImageSize = (Spinner)findViewById(R.id.spImageSize);
@@ -76,6 +74,8 @@ public class EditSearchSettingsActivity extends Activity {
 		spImageType.setSelection(imageTypesAdapter.getPosition(imageType));
 		
 	}
+	
+	//Send the settings back to the search controller.
 	public void saveSettings(View v) {
 		Intent data = new Intent();		
 		data.putExtra("imageSize", spImageSize.getSelectedItem().toString());

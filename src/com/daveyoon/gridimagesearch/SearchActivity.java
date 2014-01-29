@@ -31,10 +31,11 @@ public class SearchActivity extends Activity {
 	ImageResultsArrayAdapter imageAdapter;
 	
 	//Settings 
-	private String imageSize; 
-	private String imageType; 
-	private String siteFilter;
-	private String colorFilter;						
+	private String imageSize=""; 
+	private String imageType=""; 
+	private String siteFilter="";
+	private String colorFilter="";			
+	private int totalResults=0;
 	
 	//Constants for Intent Views
 	private final int SAVE_SETTINGS_CODE = 1; 	
@@ -56,7 +57,13 @@ public class SearchActivity extends Activity {
 				startActivity(i); 
 			}
 		});
-	
+		gvResults.setOnScrollListener(new EndlessScrollListener() {
+	        @Override
+	        public void onLoadMore(int page, int totalItemsCount) {
+	        	totalResults = totalItemsCount; 
+	            loadDataFromApi(); 
+	        }
+	    });
 	}
 	
 	public void onSettingsView(MenuItem mi) {
@@ -81,27 +88,51 @@ public class SearchActivity extends Activity {
 		btnSearch = (Button)findViewById(R.id.btnSearch);
 	}
 	
+	//wrapper to initiate and call the data query
 	public void onImageSearch(View v) { 
+		loadDataFromApi();
+	}
+	
+	//Build the data query from the view and search filter settings
+	public void loadDataFromApi() { 
 		String query = etQuery.getText().toString();
 		Toast.makeText(this, "Searching for: " + query, Toast.LENGTH_LONG).show();
 		AsyncHttpClient client = new AsyncHttpClient();
-		String baseUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=";
-		int pageNumber = 0;
-		client.get(baseUrl + query + "&start=" + pageNumber, new JsonHttpResponseHandler() {
+		String baseUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=" + query;
+		if (not_blank(colorFilter)) {
+			baseUrl += "&imgcolor=" + colorFilter;
+		}
+								
+		if (not_blank(imageSize)) {
+			baseUrl += "&imgsz=" + imageSize;
+		}
+		
+		if (not_blank(imageType)) {
+			baseUrl += "&imgtype=" + imageType;
+		}
+		
+		if (not_blank(siteFilter)) { 
+			baseUrl += "&as_sitesearch="+ siteFilter;
+		}
+		
+		baseUrl = baseUrl + "&start=" + totalResults;
+		Log.d("debug", baseUrl);		
+		client.get(baseUrl, new JsonHttpResponseHandler() {			
 			@Override 
 			public void onSuccess(JSONObject response) { 
 				JSONArray imageJsonResults = null; 
 				try {
-					imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
-					imageResults.clear(); 
+					imageJsonResults = response.getJSONObject("responseData").getJSONArray("results"); 
 					imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
-					Log.d("DEBUG", imageResults.toString());
+					totalResults += imageResults.size();					
 				} catch (JSONException e) {
-					e.printStackTrace();
-					
+					e.printStackTrace();					
 				}
 			}
-		});
+			public void onFailure(java.lang.Throwable t, org.json.JSONObject e){
+				t.printStackTrace();				
+			}
+		});				
 	}
 	
     @Override
@@ -110,10 +141,13 @@ public class SearchActivity extends Activity {
          imageSize = data.getExtras().getString("imageSize");
          imageType = data.getExtras().getString("imageType");
          siteFilter = data.getExtras().getString("siteFilter");
-         colorFilter = data.getExtras().getString("colorFilter");    
-         Toast.makeText(getApplicationContext(), "color" + colorFilter, Toast.LENGTH_LONG).show(); 
-         Log.d("DEBUG", "color" + colorFilter);         
+         colorFilter = data.getExtras().getString("colorFilter");              
+         Log.d("DEBUG", "color:" + colorFilter + "size:" + imageSize + "type:" + imageType);         
       }
     } 
+    
+    private boolean not_blank(String s) { 
+    	return s != null && s.trim().length() > 0; 
+    }
 	
 }

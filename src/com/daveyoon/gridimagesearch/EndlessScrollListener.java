@@ -15,7 +15,7 @@ public abstract class EndlessScrollListener implements OnScrollListener {
     private boolean loading = true;
     // Sets the starting page index
     private int startingPageIndex = 0;
-    
+
     public EndlessScrollListener() {
     }
 
@@ -28,18 +28,48 @@ public abstract class EndlessScrollListener implements OnScrollListener {
         this.startingPageIndex = startPage;
         this.currentPage = startPage;
     }
-    
-	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
-		// TODO Auto-generated method stub
 
-	}
+    // This happens many times a second during a scroll, so be wary of the code you place here.
+    // We are given a few useful parameters to help us work out if we need to load some more data,
+    // but first we check if we are waiting for the previous load to finish.
+    @Override
+    public void onScroll(AbsListView view,int firstVisibleItem,int visibleItemCount,int totalItemCount) 
+        {
+        // If the total item count is zero and the previous isn't, assume the
+        // list is invalidated and should be reset back to initial state
+        // If there are no items in the list, assume that initial items are loading
+        if (!loading && (totalItemCount < previousTotalItemCount)) {
+            this.currentPage = this.startingPageIndex;
+            this.previousTotalItemCount = totalItemCount;
+            if (totalItemCount == 0) { this.loading = true; } 
+        }
 
-	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		// TODO Auto-generated method stub
+        // If it’s still loading, we check to see if the dataset count has
+        // changed, if so we conclude it has finished loading and update the current page
+        // number and total item count.
+        if (loading) {
+            if (totalItemCount > previousTotalItemCount) {
+                loading = false;
+                previousTotalItemCount = totalItemCount;
+                currentPage++;
+            }
+        }
 
-	}
+        // If it isn’t currently loading, we check to see if we have breached
+        // the visibleThreshold and need to reload more data.
+        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
+        if (!loading && (totalItemCount - visibleItemCount)<=(firstVisibleItem + visibleThreshold)) 
+                {
+            onLoadMore(currentPage + 1, totalItemCount);
+            loading = true;
+        }
+    }
 
+    // Defines the process for actually loading more data based on page
+    public abstract void onLoadMore(int page, int totalItemsCount);
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        // Don't take any action on changed
+    }
 }
